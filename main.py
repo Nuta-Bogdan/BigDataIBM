@@ -1,16 +1,15 @@
-# This is a sample Python script.
+import pyspark
+from pyspark.sql import SparkSession
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+spark = SparkSession.builder.getOrCreate()
 
+df = spark.read.csv("Erasmus.csv", header=True)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# tema 1
+# selectare coloane
+d2 = df.select(["Receiving Country Code", "Sending Country Code"])
+# frecventa valori
+d3 = d2.groupBy(["Receiving Country Code", "Sending Country Code"]).count()
+# sortare
+d4 = d3.orderBy(["Receiving Country Code", "Sending Country Code"])
+d4.show(n=df.count(), truncate=False)
