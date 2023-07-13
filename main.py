@@ -11,4 +11,4 @@ df = spark.read.csv("Erasmus.csv", header=True)
 d3 = df.groupBy(["Receiving Country Code", "Sending Country Code"]).count()
 # sortare
 d4 = d3.orderBy(["Receiving Country Code", "Sending Country Code"])
-d4.show(n=df.count(), truncate=False)
+d4.filter((d4["Receiving Country Code"] == "LV") | (d4["Receiving Country Code"] == "MK") |(d4["Receiving country code"] == "MT")).show()
